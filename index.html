@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>GIPHY Web App!</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand">GIPHY Web App!</a>
+            <form> 
+                <label for="search" style="color: aliceblue;">Search for Gifs</label>
+                <input id="search" placeholder="keyword" type="text" />
+                <button id="btnSearch" value="Su">Gif Me</button>
+            </form>
+    </nav>
+    <div id="trendyGifs">
+    </div>
+
+    <div id ="results"></div>
+
+    <script>
+         let giphyAPI = `http://api.giphy.com/v1/gifs/trending?offset=15&api_key=VD7VNTc9dx82sjfkHMp626ETqc2O2ByS&limit=15`;
+            function getGif() {
+                fetch(giphyAPI)
+                    .then(response => {
+                        return response.json();
+                    })
+                    .then(json => {
+                        console.log(json)
+                        for(i = 0; i < json.data.length; i++){
+                        console.log(json.data[i].images.original.url);
+                        var giphy = document.createElement("img");
+                        giphy.setAttribute('src', json.data[i].images.original.url);
+                        giphy.setAttribute('width', '200px');
+                        document.body.appendChild(giphy);
+                        }
+                    })
+                    .catch(err => console.log(err));
+            }
+            getGif();
+
+        var $form = $("form")
+            $search = $("search")
+            $form.on("submit", function(e) {
+                e.preventDefault();
+                getQuery();
+            });
+
+        function goQuery() {
+            var input = $search.val();
+            $.getJSON("http://api.giphy.com/v1/gifts/search?q=&api_key=VD7NTc9dx82sjfkHMp626ETqc202ByS&limit=6&offset=15" + input, function(json) {
+                json.data
+            })
+        }
+
+        //     var xhr = $.get("http://api.giphy.com/v1/gifts/search?q=&api_key=VD7NTc9dx82sjfkHMp626ETqc202ByS&limit=6&offset=15");
+        //     xhr.done(function query(data) {console.log("Here is the best we can do", data); });
+        //     document.getElementById("search").innerText 
+        //  }
+            
+         
+    </script>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>
